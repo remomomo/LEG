@@ -216,23 +216,43 @@ server <- function(input, output, session) {
     if (input$Method == "Combined Model" ){ 
       top.preds<-top.10000.combined
       pred.type<-"predictions.combined"
-      gw.pred<<-import.bedGraph("./data/predictions_Ridge.bdg.gz", which=ranges)
     }else{ 
       top.preds<-top.10000.SOR
       pred.type<-"predictions.SOR"
-      gw.pred<<-import.bedGraph("./data/predictions_SOR.bdg.gz", which=ranges)
     }
     
+    message('ranges:')
+    print(ranges)
+    
+    message('orig.ranges:')
+    print(orig.ranges)
+    
     olaps<-findOverlaps(ranges, top.preds)
+    
+    message('olaps:')
+    print(olaps)
     
     validate( need( length(olaps)!=0 , "No high-ranking limb-enhancers overlap the regions you provided.") )
     
     # getting the overlapping top predictions and scores:
     hits<-top.preds[ subjectHits(olaps) ]
     
+    if ( input$Method == "Combined Model" ){
+      gw.pred<<-import.bedGraph("./data/predictions_Ridge.bdg.gz", which=hits)
+    }else{
+      gw.pred<<-import.bedGraph("./data/predictions_SOR.bdg.gz", which=hits)
+    }
+    
+    message('hits:')
+    print(hits)
+    
     setProgress(0.8, message = "Ranking, constructing metadata...")
     
-    hits$score<-get_best_overlapping(predictions=gw.pred, hits, minoverlap=1999)$score
+    s<-get_best_overlapping(predictions=gw.pred, hits, minoverlap=1999)
+    message('s:')
+    print(s)
+    
+    hits$score<-s$score
     hits$rank<-hits$reduced.rank
     hits$reduced.rank<-NULL
     
@@ -253,7 +273,12 @@ server <- function(input, output, session) {
         
       }
       
+      message('mm9.hits:')
+      print(mm9.hits)
+      
       results_table<-data.frame(input.region = names(ranges)[qh], chr=seqnames(mm9.hits),start=start(mm9.hits),end=end(mm9.hits),data.frame(mcols(hits)))
+      message('results table:')
+      print(head(results_table,10))
       
     }else results_table<-data.frame(input.region = names(ranges)[qh], chr=seqnames(hits),start=start(hits),end=end(hits),data.frame(mcols(hits)))
     
