@@ -17,8 +17,9 @@ COPY ./shiny-server.conf /etc/shiny-server/
 RUN mkdir /srv/shiny-server/LEG/data/ && mkdir /srv/shiny-server/LEG/www/
 
 COPY ./data/top10000_combined_mm9.Rdata ./data/top10000_combined.Rdata ./data/top10000_SOR_mm9.Rdata ./data/top10000_SOR.Rdata ./data/predictions_SOR.bdg.gz.tbi ./data/predictions_SOR.bdg.gz ./data/predictions_Ridge.bdg.gz.tbi ./data/predictions_Ridge.bdg.gz ./data/mm9ToMm10.over.chain ./data/impute_ranks_combined.Rdata ./data/impute_ranks_SOR.Rdata ./data/hg38_predictions_SOR.sorted.bed.gz.tbi ./data/hg38_predictions_SOR.sorted.bed.gz ./data/hg38_predictions_Ridge.sorted.bed.gz.tbi ./data/hg38_predictions_Ridge.sorted.bed.gz ./data/hg19ToHg38.over.chain ./data/160216_velements.Rdata ./data/160216_promoters_ensemblTSS_v83.Rdata /srv/shiny-server/LEG/data/
-COPY  ./www/Slide1.PNG ./www/Slide2.PNG ./www/Slide3.PNG ./www/iframeResizer.contentWindow.min.js /srv/shiny-server/LEG/www/
+COPY  ./www/* /srv/shiny-server/LEG/www/
 COPY ./title_page.Rmd /srv/shiny-server/LEG/
+COPY ./vignette.Rmd /srv/shiny-server/LEG/
 
 EXPOSE 3838
 
@@ -26,3 +27,4 @@ EXPOSE 3838
 # then: 'docker run -m 4g --rm --publish 3838:3838 --name leg rmonti/leg'
 # then visit localhost:3838 in your browser!
 # If all is OK: 'docker push rmonti/leg'
+

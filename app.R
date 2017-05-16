@@ -504,6 +504,8 @@ ui <- shinyUI(fluidPage(
       tabsetPanel(id = "tabs",
                   tabPanel("Documentation",
                            includeMarkdown("title_page.Rmd")),
+                  tabPanel("Vignettes",
+                           includeMarkdown("vignette.Rmd")),
                   tabPanel("Results", dataTableOutput("table")),
                   # tabPanel("Plot", plotOutput("plot")),
                   # tabPanel("Summary", tableOutput("summary"), tableOutput("quantiles")),
