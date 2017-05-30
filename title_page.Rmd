@@ -12,13 +12,15 @@ fig_caption: yes
 
 Before submitting your data, take a few moments to read this documentation. The ways of the Genie are not as mysterious as they may seem. To explore your data visually, you can download the results in BED format and upload them to the UCSC Genome Browser along with our '**limb-trackhub**' (mm10/mm9), that will be automatically added to your session via [**this link**](http://genome.ucsc.edu/cgi-bin/hgTracks?db=mm10&hubUrl=http://portal.nersc.gov/dna/RD/ChIP-Seq/LEG_trackhub/hub.txt).
 
+Examples about the usage (for both mouse and human queries) are provided in the Vignettes.
+
 The Limb Enhancer Genie was trained on published [**VISTA enhancers**](http://enhancer.lbl.gov/).
 
 -----
 
 #### Analysis Type
 
-**Scan for Top** looks for any of the top 10,000 predicted limb-enhancers that overlap (≥ 1bp) the provided intervals (Figure 1). If a region overlaps multiple predicted enhancers, all of them are returned. The coordinates of the predicted enhancers, the corresponding scores computed by the selected Method (described below) and the associated genome-wide ranks are provided in the Results tab. This analysis is particularly useful to scan large regions for all the predicted enhancers overlapping them, or to find all the predicted enhancers that overlap a set of shorter regions of interest (e.g. peaks defined by ChIP-seq). If the region(s) provided do not overlap any predicted limb-enhancer, the output is empty. Importantly, the top 10,000 predictions were filtered to exclude promoters (-5kb +2kb around a TSS, Ensembl v82) as well as the VISTA enhancers used to train the models. This mode is only available for mouse-coordinate input.
+**Scan for Top** looks for any of the top 10,000 predicted limb-enhancers that overlap (≥ 1bp) the provided intervals (Figure 1). If a region overlaps multiple predicted enhancers, all of them are returned. The coordinates of the predicted enhancers, the corresponding scores computed by the selected Method (described below) and the associated genome-wide ranks are provided in the Results tab. This analysis is particularly useful to scan large regions for all the predicted enhancers overlapping them, or to find all the predicted enhancers that overlap a set of shorter regions of interest (e.g. peaks defined by ChIP-seq). If the region(s) provided do not overlap any predicted limb-enhancer, the output is empty. Importantly, the top 10,000 predictions were filtered to exclude promoters (-5kb +2kb around a TSS, Ensembl v83) as well as the VISTA enhancers used to train the models. This mode is only available for mouse-coordinate input.
 
 <center><img src="www/Slide1.PNG" alt="" style="width:50%;max-width:980px;padding:5px"></center>
 <center><p style="padding-bottom: 7px"><b>Figure 1: </b>Scan for Top</p></center>
