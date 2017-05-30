@@ -98,7 +98,7 @@ export(regions, con = 'GSE42413_human_H3K27ac_intersections.bed')
 ```
 
 
-Performing these steps resulted in a set of 15,586 regions available <a href="http://portal.nersc.gov/dna/RD/ChIP-Seq/LEG_trackhub/GSE42413_human_H2K27ac_intersections.bed" target="_blank">here</a>. **Figure 6** shows the distribution of element widths submitted in this analysis.
+Performing these steps resulted in a set of 15,586 regions available <a href="http://portal.nersc.gov/dna/RD/ChIP-Seq/LEG_trackhub/GSE42413_human_H3K27ac_intersections.bed" target="_blank">here</a>. **Figure 6** shows the distribution of element widths submitted in this analysis.
 
 <center><img src="www/width_regions.png" alt="" style="width:40%;max-width:325px;padding:5px"></center>
 <center><p style="padding-bottom: 7px"><b>Figure 6: </b>Histogram of element-width after ChIP-seq peaks pre-processing</p></center>
