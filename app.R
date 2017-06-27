@@ -11,8 +11,8 @@ load("data/160216_velements.Rdata")
 load("data/top10000_SOR.Rdata")
 load("data/top10000_combined.Rdata")
 
-# allowing uploads of bedfiles up to 15MB
-options(shiny.maxRequestSize=15*1024^2)
+# allowing uploads of bedfiles up to 10MB
+options(shiny.maxRequestSize=10*1024^2)
 
 # function to find the overlapping tiles with highest scores for mouse-coordinate input
 get_best_overlapping<-function(predictions, ranges, return.coordinates=FALSE ,...){
@@ -352,7 +352,6 @@ server <- function(input, output, session) {
       hits$imputed.gw.rank[ hits$imputed.gw.rank == 10000 ]<-NA
       hits$rank.within.set<--1*(rank(hits$score)-length(hits)-1)
       
-      # for mapping back to the original ranges... this should be included! ! ! ! !
       orig.ranges<-orig.ranges[match(names(hits), orig.ranges$name)]
       
       hits$name<-NULL
@@ -509,8 +508,8 @@ ui <- shinyUI(fluidPage(
                   tabPanel("Results", dataTableOutput("table")),
                   # tabPanel("Plot", plotOutput("plot")),
                   # tabPanel("Summary", tableOutput("summary"), tableOutput("quantiles")),
-                  tabPanel("Summary", tableOutput("summary")),
-                  tabPanel("Download",
+                  tabPanel("Results: Summary", tableOutput("summary")),
+                  tabPanel("Results: Download",
                            radioButtons("filetype", "File type:",
                                         choices = c("bed", "csv")),
                            conditionalPanel('input.filetype == "bed" && input.analysis_type == "Score short region(s)" ',

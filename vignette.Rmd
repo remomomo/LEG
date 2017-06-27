@@ -26,25 +26,25 @@ However, simply because these regions lie close to Sox9 does not necessarily mea
 
 ### Finding Enhancers Using Capture-C Data
 
-In their [2017 paper](https://www.ncbi.nlm.nih.gov/pubmed/27923844)
-*Characterization of hundreds of regulatory landscapes in developing limbs reveals two regimes of chromatin folding* (data available from <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2251424" target="_blank">GSM2251424</a>) Andrey G et al. characterized the regulatory landscape of genes in developing limbs at E11.5. We use the list of regions predicted to interact with Sox9 in forelimbs at E11.5, <a href="http://portal.nersc.gov/dna/RD/ChIP-Seq/LEG_trackhub/chr11_112641359_112646504_Sox9.peaks.bed" target="_blank"> available here </a>, upload it using the "upload BED" option (**Figure 3**) and adjust the other settings as in the previous analysis.
-
+In their <a href="https://www.ncbi.nlm.nih.gov/pubmed/27923844" target="_blank">2017 paper</a>
+*Characterization of hundreds of regulatory landscapes in developing limbs reveals two regimes of chromatin folding* (data available from <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2251424" target="_blank">GSM2251424</a>) Andrey G et al. characterized the regulatory landscape of genes in developing limbs at E11.5. We use the list of regions predicted to interact with Sox9 in forelimbs at E11.5, <a href="http://portal.nersc.gov/dna/RD/ChIP-Seq/LEG_trackhub/chr11_112641359_112646504_Sox9.peaks.bed" target="_blank">available here</a>, upload it using the "upload BED" option (**Figure 3**) and adjust the other settings as in the previous analysis.
 
 <center><img src="www/upload_bed.png" alt="" style="width:40%;max-width:300px;padding:5px"></center>
 <center><p style="padding-bottom: 7px"><b>Figure 3: </b>Uploading a BED-file</p></center>
 
-Out of 34 submitted regions, 3 overlap newly predicted limb-enhancers (**Figure 4**), with one of them even ranking in the top 1,000 highest scoring elements. Notably, none of these were identified by our simple approach above, as they're lying further away from the target gene (we limited the analysis to 500kb window around Sox9).
+Out of 34 submitted regions, 3 overlap newly predicted limb-enhancers (**Figure 4**), with one of them even ranking in the top 1,000 highest scoring elements. Notably, none of these were identified by our simple approach above, as they lie further away from the target gene (we limited the analysis to a 500kb window around Sox9).
 
 <center><img src="www/results_sox9.png" alt="" style="width:60%;max-width:500px;padding:5px"></center>
 <center><p style="padding-bottom: 7px"><b>Figure 4: </b>Enhancer predictions for Sox9 based on Capture C data</p></center>
 
-But why look only at Sox9? To find potential enhancers for all the genes included in the <a href="https://www.ncbi.nlm.nih.gov/pubmed/27923844" target="_blank"> study</a>. To this aim, a file containing all the interaction peaks can be downloaded <a href="http://portal.nersc.gov/dna/RD/ChIP-Seq/LEG_trackhub/combined_peaks.bed" target="_blank"> here</a>. To generate this file, the bed files for each gene ("Mm_Peaks-0.95") were downloaded from <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2251424" target="_blank">GSM2251424</a>, and merged together running the following command:
+But why look only at Sox9? To find potential enhancers for all the genes included in the <a href="https://www.ncbi.nlm.nih.gov/pubmed/27923844" target="_blank"> study</a>. To this aim, a file containing all the interaction peaks can be downloaded <a href="http://portal.nersc.gov/dna/RD/ChIP-Seq/LEG_trackhub/combined_peaks.bed" target="_blank"> here</a>. To generate this file, the bed files for each gene ("Mm_Peaks-0.95") were downloaded from <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2251424" target="_blank">GSM2251424</a>, and merged together using the following command:
 
 ```{bash, eval=FALSE}
+# macOS X terminal / Unix command line
 # merge BED-files and name regions according to target gene:
 awk 'OFS="\t" {print $0, FILENAME}' *.peaks.bed | sed 's/chr[0-9XY]*_[0-9]*_[0-9]*_//g' | sed 's/\.peaks\.bed//g' > combined_peaks.bed
 ```
-We repeat the same analysis performed on the Sox9 locus alone with this new BED-file. This results in a list of enhancer predictions, all of which overlap a peak defined by Capture-C. The information on the target genes was provided in the name-field of the BED-file, and is retained in the output  (**Figure 5**, "input.region"). Out of 3,329 regions submitted, 343 (10.3%) overlap a novel enhancer-prediction. Note that some enhancers are predicted to interact with multiple genes and appear in the output more than once.
+We repeat the same analysis performed above on the Sox9 locus with this new BED-file. This results in a list of enhancer predictions, all of which overlap a peak defined by Capture-C. The information on the target genes was provided in the name-field of the BED-file, and is retained in the output  (**Figure 5**, "input.region"). Out of 3,329 regions submitted, 343 (10.3%) overlap a novel enhancer-prediction. Note that some enhancers are predicted to interact with multiple genes and appear in the output more than once.
 
 <center><img src="www/extended_CC_results_all_genes.png" alt="" style="width:60%;max-width:500px;padding:5px"></center>
 <center><p style="padding-bottom: 7px"><b>Figure 5: </b>Results-tab: All CC peaks</p></center>
@@ -57,7 +57,7 @@ In order to provide unique names in the output, the LEG appends a number to each
 
 In this example, we will seek to identify a set of ChIP-seq peaks from human tissue that most likely correspond to conserved limb-specific enhancers.
 
-In their <a href="https://www.ncbi.nlm.nih.gov/pubmed/23827682" target="_blank">2012 paper</a> *The Evolution of Lineage-Specific Regulatory Activities in the Human Embryonic Limb*, Cotney et al. identified regions of the human genome enriched for the histone mark H3K27ac at multiple developmental stages (E33, E41, E44 and E47) from human limb-tissue. For this tutorial, we downloaded the human peaks called from <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE42413" target="_blank">here</a> and performed additional pre-processing as described below.
+In their <a href="https://www.ncbi.nlm.nih.gov/pubmed/23827682" target="_blank">2013 paper</a> *The Evolution of Lineage-Specific Regulatory Activities in the Human Embryonic Limb*, Cotney et al. identified regions of the human genome enriched for the histone mark H3K27ac at multiple developmental stages (E33, E41, E44 and E47) from human limb-tissue. For this tutorial, we downloaded the human peaks called from <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE42413" target="_blank">here</a> and performed additional pre-processing as described below.
 
 ### Pre-processing Peaks in R
 
@@ -71,6 +71,7 @@ ChIP-seq peaks from all four developmental time-points were intersected. Only re
 library(GenomicRanges)
 library(rtracklayer)
 
+# system call works for macOS X / Unix
 beds<-system('ls *.bed | sort', intern=TRUE)
 beds<-lapply(beds, import.bed)
 intsct<-beds[[1]]
@@ -91,14 +92,13 @@ large_regions<-unlist(large_regions)
 regions<-c(intsct, large_regions)
 regions<-sort(regions)
 
+# this will create the histogram shown below:
 # hist(width(regions), 20, xlab='width [bp]', main='Histogram of Width')
 
 export(regions, con = 'GSE42413_human_H3K27ac_intersections.bed')
-
 ```
 
-
-Performing these steps resulted in a set of 15,586 regions available <a href="http://portal.nersc.gov/dna/RD/ChIP-Seq/LEG_trackhub/GSE42413_human_H3K27ac_intersections.bed" target="_blank">here</a>. **Figure 6** shows the distribution of element widths submitted in this analysis.
+Performing these steps resulted in a set of 15,586 regions available <a href="http://portal.nersc.gov/dna/RD/ChIP-Seq/LEG_trackhub/GSE42413_human_H3K27ac_intersections.bed" target="_blank">here</a>. **Figure 6** shows the distribution of element widths after applying the transformations.
 
 <center><img src="www/width_regions.png" alt="" style="width:40%;max-width:325px;padding:5px"></center>
 <center><p style="padding-bottom: 7px"><b>Figure 6: </b>Histogram of element-width after ChIP-seq peaks pre-processing</p></center>
@@ -110,7 +110,7 @@ We now submit these coordinates to the LEG. On the sidebar panel on the left, we
 <center><img src="www/upload_complete.png" alt="" style="width:40%;max-width:300px;padding:5px"></center>
 <center><p style="padding-bottom: 7px"><b>Figure 7: </b>Ready to Score Short Region(s)</p></center>
 
-We start the analysis by pressing "Submit". This should take about 20 seconds, in which the LEG finds overlaps of the submitted regions (our intersected ChIP-seq peaks) to enhancer-predictions originating from the mouse genome. Those predictions (spanning the entire mouse genome) were mapped to the human genome using liftOver. For each input region, the LEG will try to find the prediction with the largest overlap, as indicated in **Figure 8**. This is slightly different from the way the analysis works for mouse-coordinates (mm10/mm9, refer to Documentation-tab for details).
+We start the analysis by pressing "Submit". This should take about 20 seconds, in which the LEG finds overlaps of the submitted regions (our intersected ChIP-seq peaks) to predictions originating from the mouse genome. Those predictions (tiles spanning the entire mouse genome) were mapped to the human genome using liftOver. For each input region, the LEG will try to find the prediction with the largest overlap, as indicated in **Figure 8**. This is slightly different from the way the analysis works for mouse-coordinates (mm10/mm9, refer to Documentation-tab for details).
 
 <center><img src="www/Slide3.PNG" alt="" style="width:60%;max-width:950px;padding:5px"></center>
 <center><p style="padding-bottom: 7px"><b>Figure 8: </b>Score Short Regions for human-coordinate input</p></center>
@@ -125,7 +125,7 @@ In this analysis, "lifted.bp" indicates the number of basepairs that were mapped
 <center><img src="www/top_preds_mm10_coordinates.png" alt="" style="width:80%;max-width:800px;padding:5px"></center>
 <center><p style="padding-bottom: 7px"><b>Figure 10: </b>Score Short Region(s)  Results (part 2)</p></center>
 
-We find that the three highest scoring predictions either overlap elements in VISTA used to train the LEG ("overlaps.training") or annotated promoters in the release 83 of Ensembl ("overlaps.promoter"). The fourth highest ranking element overlaps neither of these two groups, instead overlaps one of the top 10,000 predicted limb-enhancers ("overlaps.top10000") that are parsed when using the "Scan for Top" analysis mode. We decide to take a closer look at that prediction (mm10, chr11:85,875,633-85,877,633) on the UCSC genome browser.
+We find that the three highest scoring predictions either overlap elements in VISTA used to train the LEG ("overlaps.training") or annotated promoters in the release 83 of Ensembl ("overlaps.promoter"). The fourth highest ranking element overlaps neither of these two groups, instead it overlaps one of the top 10,000 predicted limb-enhancers ("overlaps.top10000") that are parsed when using the "Scan for Top" analysis mode. We decide to take a closer look at that prediction (mm10, chr11:85,875,633-85,877,633) on the UCSC genome browser.
 
 ### Inspecting Results in the Limb-Trackhub
 
@@ -134,7 +134,7 @@ We go to the <a href="http://genome.ucsc.edu/cgi-bin/hgTracks?db=mm10&hubUrl=htt
 <center><img src="www/copy_to_genome_browser.png" alt="" style="width:70%;max-width:500px;padding:5px"></center>
 <center><p style="padding-bottom: 7px"><b>Figure 11: </b>Browsing Predictions in the Track-Hub</p></center>
 
-Zooming out, we see that the element lies upstream (~10kb) of the Tbx4 transcription factor (**Figure 12**), which is an important regulator for hindlimb development (<a href="http://dev.biologists.org/content/130/12/2681?ijkey=718eaea70fc1547b5ad5d43b506188cca917b277&keytype2=tf_ipsecsha" target="_blank">Naiche et al. 2003</a>).
+Zooming out, we see that the element lies upstream (~10kb) of the Tbx4 transcription factor (**Figure 12**), which is an important regulator for hindlimb development (<a href="http://dev.biologists.org/content/130/12/2681?ijkey=718eaea70fc1547b5ad5d43b506188cca917b277&keytype2=tf_ipsecsha" target="_blank">Naiche et al. 2003</a>). In fact, this prediction overlaps HLEA (HindLimb Element A) described in <a href="http://dev.biologists.org/content/135/15/2543.long" target="_blank">2008 by Menke et al</a>, and is therefore a true positive prediction.
 
 <center><img src="www/genome_browser_screenshot.png" alt="" style="width:60%;max-width:900px;padding:5px"></center>
 <center><p style="padding-bottom: 7px"><b>Figure 12: </b>Genome-browser View Centered on Predicted Enhancer</p></center>
@@ -143,8 +143,8 @@ Zooming out, we see that the element lies upstream (~10kb) of the Tbx4 transcrip
 
 We now go back to the LEG and switch to the Download-tab, where we can download the complete results table or a specified number of elements showing the highest scores. We download the highest ranking 1,000 predictions (hg19 coordinates) in BED format (**Figure 13**). For reference, the output BED-file is available <a href="http://portal.nersc.gov/dna/RD/ChIP-Seq/LEG_trackhub/EnhancerGenieResults.bed" target="_blank">here</a>.
 
-<center><img src="www/download_page.png" alt="" style="width:25%;max-width:120px;padding:5px"></center>
-<center><p style="padding-bottom: 7px"><b>Figure 13: </b>Downloading Results.</p></center>
+<center><img src="www/download_page.png" alt="" style="width:35%;max-width:170px;padding:5px"></center>
+<center><p style="padding-bottom: 7px"><b>Figure 13: </b>Downloading Results</p></center>
 
 Following the BED-format specifications, the score-column contains an integer between 1 and 999 corresponding to the score multiplied by a factor of 1000. For exact scores, the results have to be downloaded as CSV.
 
@@ -152,7 +152,7 @@ We now leave the LEG and submit our newly identified enhancer candidates to <a h
 
 We find that the highest scoring 1,000 regions are 3.8-fold enriched near genes involved in "limb morphogenesis" (5.4e-27 Binom FDR Q-Val, **Figure 14**). They are also strongly enriched near genes expresssed in limb at developmental stages TS17 and TS19 (MGI Expression: Detected, Binom FDR Q-Val 5.0e-63 and 2.2e-55, respectively).
 
-<center><img src="www/great_results.png" alt="" style="width:80%;max-width:1000px;padding:5px"></center>
+<center><img src="www/great_results.png" alt="" style="width:90%;max-width:1100px;padding:5px"></center>
 <center><p style="padding-bottom: 7px"><b>Figure 14: </b>Submitting Results to GREAT</p></center>
 
 For comparison, randomly sampling 1,000 regions from the original BED-file did not result in a significant enrichment for any of these terms related to limb development.
