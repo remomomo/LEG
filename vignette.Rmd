@@ -37,7 +37,7 @@ Out of 34 submitted regions, 3 overlap newly predicted limb-enhancers (**Figure 
 <center><img src="www/results_sox9.png" alt="" style="width:60%;max-width:500px;padding:5px"></center>
 <center><p style="padding-bottom: 7px"><b>Figure 4: </b>Enhancer predictions for Sox9 based on Capture C data</p></center>
 
-But why look only at Sox9? To find potential enhancers for all the genes included in the <a href="https://www.ncbi.nlm.nih.gov/pubmed/27923844" target="_blank"> study</a>. To this aim, a file containing all the interaction peaks can be downloaded <a href="http://portal.nersc.gov/dna/RD/ChIP-Seq/LEG_trackhub/combined_peaks.bed" target="_blank"> here</a>. To generate this file, the bed files for each gene ("Mm_Peaks-0.95") were downloaded from <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2251424" target="_blank">GSM2251424</a>, and merged together using the following command:
+But why look only at Sox9? We can easily expand our analysis to find potential enhancers for all the genes included in the <a href="https://www.ncbi.nlm.nih.gov/pubmed/27923844" target="_blank"> study</a>. To this aim, a file containing all the interaction peaks can be downloaded <a href="http://portal.nersc.gov/dna/RD/ChIP-Seq/LEG_trackhub/combined_peaks.bed" target="_blank"> here</a>. To generate this file, the bed files for each gene ("Mm_Peaks-0.95") were downloaded from <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2251424" target="_blank">GSM2251424</a>, and merged together using the following command:
 
 ```{bash, eval=FALSE}
 # macOS X terminal / Unix command line
