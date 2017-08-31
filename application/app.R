@@ -134,6 +134,7 @@ server <- function(input, output, session) {
         bedfile<-input$bedfile
         ranges<-import.bed(bedfile$datapath)
         if( !all(end(ranges)>=start(ranges))) end(ranges)[ start(ranges) > end(ranges) ]<-start(ranges)[ start(ranges) > end(ranges) ]
+        if( length(ranges) == 0 ) stop('Unable to read ranges from BED-file.')
       }else if(input$range.start!=""){
         # if no bedfile was given, take the text input...
         ranges<-GRanges(input$range.chr, IRanges(as.numeric(input$range.start), as.numeric(input$range.end)))
