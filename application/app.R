@@ -200,7 +200,9 @@ server <- function(input, output, session) {
       
       # depending on the analysis type, we submit the ranges to one of two methods, that calculate the outputs:
       
-      ranges<-keepSeqlevels( ranges, value = paste0("chr",c(1:22, "X", "Y")) )
+      seql<-seqlevels(ranges)
+      seql<-seql[ seql %in% paste0("chr",c(1:22, "X", "Y")) ]
+      ranges<-keepSeqlevels( ranges, value = seql )
       
       if (input$analysis_type=="Scan for top"){return(find.highranking(ranges))
       }else return(rank.regions(ranges))
